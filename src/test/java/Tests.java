@@ -18,7 +18,7 @@ public class Tests{
         File dir = new File(dirName);
         File myFile = new File(fileName);
         FileWriter writer = new FileWriter(myFile, false);
-        Main.AllFiles(dir, writer);
+        Main.allFiles(dir, writer);
         writer.close();
 
         FileReader fr = new FileReader("/home/aleksey/IdeaProjects/Problem_4/Log.txt");

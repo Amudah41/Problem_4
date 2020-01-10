@@ -15,29 +15,40 @@ public class Main {
         }
 
         System.out.println("Введите файл: ");
-        String FileName = scanner.next();
-        File MyFile = new File(FileName);
-        if (!MyFile.exists()) {
-            System.out.println("Данный файл не существует.");
-            System.exit(0);
+        String fileName = scanner.next();
+        File myFile = new File(fileName);
+        if (!myFile.exists()) {
+            System.out.println("Данный файл не существует");
+            try {
+                if(myFile.createNewFile()){
+                    System.out.println("Файл успешно создан");
+                }
+            }
+            catch(IOException ex){
+                System.out.println(ex.getMessage());
+            }
         }
+        else {
+            System.out.println("Данный файл был перезаписан");
+        }
+
         FileWriter writer = null;
         try {
-            writer = new FileWriter(MyFile, false);
+            writer = new FileWriter(myFile, false);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        AllFiles(dir, writer);
+        allFiles(dir, writer);
         assert writer != null;
         writer.close();
     }
 
-    public static void AllFiles(File dir, FileWriter writer){
+    public static void allFiles(File dir, FileWriter writer){
         File[] files = dir.listFiles();
         assert files != null;
         for (File file : files) {
             if (file.isDirectory()) {
-                AllFiles(file, writer);
+                allFiles(file, writer);
             }
             try {
                 writer.write(file.getName() + "\n");
